@@ -1,0 +1,92 @@
+[tool.poetry]
+name = "corgipath"
+# https://semver.org/
+version = "0.1.0-alpha.1"
+description = "Customizable path planner"
+authors = ["Hong-ryul Jung <jung.hr.1206@g.skku.edu>"]
+license = "MIT"
+
+repository = "https://github.com/ryul1206/corgipath"
+# homepage = "http://rise-lab-skku.github.io/flexipath"
+readme = "README.md"
+# include = ["CHANGELOG.md"]
+packages = [{ include = "corgipath" }]
+
+keywords = ["robotics", "path-planning", "hybrid-a-star"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Framework :: Robot Framework :: Library",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/ryul1206/corgipath/issues"
+
+[tool.poetry.dependencies]
+python = ">=3.8.1,<3.12"
+numpy = "^1.24.1"
+collision = "^1.2.2"
+aabbtree = "^2.8.1"
+pillow = "^9.4.0"
+scipy = "^1.10.0"
+matplotlib = "^3.6.3"
+shapely = "^2.0.0"
+
+
+[tool.poetry.group.dev]
+optional = true
+[tool.poetry.group.dev.dependencies]
+black = "^22.12.0"
+flake8 = "^6.0.0"
+snakeviz = "^2.1.1"
+unittest-xml-reporting = "^3.2.0"
+taskipy = "^1.10.3"
+
+
+[tool.poetry.group.docs]
+optional = true
+[tool.poetry.group.docs.dependencies]
+sphinx = "^4.5"
+sphinx-book-theme = "^0.3.3"
+sphinx-autobuild = "^2021.3.14"
+sphinx-copybutton = "^0.5.1"
+sphinx-automodapi = "^0.14.1"
+sphinxcontrib-mermaid = "^0.7.1"
+myst-parser = "^0.18.1"
+
+
+[tool.poetry.group.docstr]
+optional = true
+[tool.poetry.group.docstr.dependencies]
+docstr-coverage = "^2.2.0"
+
+
+[tool.poetry.scripts]
+test-examples = "tests.test_examples:main"
+
+
+[tool.taskipy.tasks]
+
+# Docstring
+check-docstr = "docstr-coverage ./flexipath -m -i -P"
+
+# Sphinx
+build-doc = "cd docs && make html && cd .."
+live-doc = "sphinx-autobuild -b html docs docs/_build/html --port 8000"
+clean-doc = "cd docs && rm -rf api && make clean && cd .."
+restart-doc = "task clean-doc && task build-doc && task live-doc"
+
+# Python
+clean-pyc-l = "find . -name '*.pyc' -type f -delete"
+clean-pyc-w = "Get-ChildItem -Filter '*.pyc' -Force -Recurse | Remove-Item -Force"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
