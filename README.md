@@ -1,51 +1,57 @@
-# CorgiPath: Customizable Path Planner
+# CorgiPath
 
-![Python version](https://img.shields.io/badge/python-3.8+-blue)
-[![License](https://img.shields.io/github/license/ryul1206/corgipath)](https://github.com/ryul1206/corgipath/blob/main/LICENSE)
+<!--  -->
 
-Here is a simple flow chart:
+A customizable path & motion planner for **MAPF (Multi-Agent Path Finding)**,
+written in Rust. corgipath is built like a modular synthesizer: orthogonal,
+swappable components (search space, collision, planning) plug into typed ports
+(Rust traits), and the compiler — not a runtime check — enforces which pieces fit
+together.
 
-```mermaid
-flowchart LR
+> Status: **early scaffolding.** Single-agent search (Dijkstra, A\*) is being
+> built first. This is a from-scratch Rust rewrite; it inherits only the
+> *composition philosophy* of the original Python
+> [corgipath](https://github.com/ryul1206/corgipath), not its code.
 
-c("Collision Layer")
-s("Search-space Layer")
-
-plan("Planning Module")
-post("Postprocessing Module\n(optional)")
-v("Matplot Viewer\n(optional)")
-
-c --> plan
-s --> plan
-
-plan -.-> post
-plan -.-> v
-post -.-> v
-
-style c stroke:#f66,stroke-width:2px
-style s stroke:#f66,stroke-width:2px
-style plan stroke:#f66,stroke-width:2px
-style post stroke-width:2px,stroke-dasharray: 5 5
-style v stroke-width:2px,stroke-dasharray: 5 5
-```
-
-## Installation
-
-<!-- ```sh
-poetry build
-``` -->
-
-## Build your own planner
-
-Development in vscode
+## Workspace layout
 
 ```
-poetry config virtualenvs.in-project true
-poetry config virtualenvs.path "./.venv"
+crates/
+  corgipath-core/     # State, SearchSpace, Collision, Map contracts (regime-agnostic)
+  corgipath-search/   # Dijkstra, A* — single-agent search (depends on core)
 ```
 
-## Contribute
+More crates (centralized/decentralized MAPF, C/Python bindings, visualization
+backends) arrive as the project grows. The dependency direction `core → search`
+is fixed from the start.
 
-Thanks for taking the time to contribute!
+## License
 
-- We recommend developing in [a virtual environment using Poetry](https://python-poetry.org/docs/basic-usage#using-your-virtual-environment).
+corgipath is dual-licensed under either of
+
+- **MIT license** ([LICENSE-MIT](LICENSE-MIT) or <https://opensource.org/licenses/MIT>), or
+- **Apache License, Version 2.0** ([LICENSE-APACHE](LICENSE-APACHE) or <https://www.apache.org/licenses/LICENSE-2.0>),
+
+**at your option.**
+
+### What does "dual-licensed, at your option" mean? (a plain-language note)
+
+If you're new to this: you do **not** have to comply with both licenses. You pick
+**whichever one of the two** you prefer, and use corgipath under that license
+alone. You can even pick different licenses for different projects.
+
+Why offer both? This is the de-facto standard in the Rust ecosystem:
+
+- **MIT** is short, permissive, and familiar — easy to drop into almost anything.
+- **Apache-2.0** says essentially the same thing but adds an **explicit patent
+  grant** (contributors can't later sue you over patents covering their
+  contributions) and clearer terms for larger/corporate users.
+
+Offering both lets MIT-only projects and Apache-preferring organizations each use
+corgipath comfortably. When in doubt, MIT is the simplest choice.
+
+### Contributing
+
+Unless you explicitly state otherwise, any contribution you intentionally submit
+for inclusion in corgipath, as defined in the Apache-2.0 license, shall be
+dual-licensed as above, without any additional terms or conditions.

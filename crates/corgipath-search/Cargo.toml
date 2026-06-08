@@ -1,0 +1,31 @@
+[package]
+name = "corgipath-search"
+description = "Single-agent search algorithms (Dijkstra, A*) built on corgipath-core contracts."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[lib]
+name = "corgipath_search"
+
+[features]
+default = []
+serde = ["corgipath-core/serde"]
+
+[dependencies]
+corgipath-core.workspace = true
+
+[dev-dependencies]
+proptest = "1"
+ratatui = "0.29"
+trybuild = "1"
+
+[[example]]
+name = "grid_tui"
+path = "examples/grid_tui.rs"

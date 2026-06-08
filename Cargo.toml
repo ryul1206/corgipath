@@ -1,0 +1,23 @@
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+# Shared metadata inherited by every crate via `field.workspace = true`.
+[workspace.package]
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.80"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/ryul1206/corgipath"
+homepage = "https://corgipath.ryul1206.dev"
+authors = ["Hong-ryul Jung <jung.hr.1206@gmail.com>"]
+keywords = ["pathfinding", "mapf", "planning", "robotics", "astar"]
+categories = ["algorithms", "science::robotics"]
+
+# Shared dependency versions. Crates opt in with `corgipath-core.workspace = true`.
+[workspace.dependencies]
+corgipath-core = { path = "crates/corgipath-core", version = "0.0.0" }
+corgipath-search = { path = "crates/corgipath-search", version = "0.0.0" }
+
+[profile.release]
+lto = "thin"

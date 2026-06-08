@@ -1,0 +1,24 @@
+error[E0271]: expected `{closure@heuristic_wrong_cost_type.rs:10:22}` to return `FixedPoint<100>`, but it returns `u32`
+  --> tests/ui/heuristic_wrong_cost_type.rs:10:39
+   |
+10 |     let wrong_cost = |_s: &GridState| 0u32;
+   |                      ---------------- ^^^^ expected `FixedPoint<100>`, found `u32`
+   |                      |
+   |                      this closure
+11 |     let _ = astar(
+   |             ----- required by a bound introduced by this call
+...
+16 |         &wrong_cost,
+   |         ----------- closure used here
+   |
+   = note: expected struct `FixedPoint<100>`
+                found type `u32`
+   = note: required for `{closure@$DIR/tests/ui/heuristic_wrong_cost_type.rs:10:22: 10:38}` to implement `Heuristic<GridState, FixedPoint<100>>`
+note: required by a bound in `astar`
+  --> src/search.rs
+   |
+   | pub fn astar<Sp, Col, H, Obs, Bud>(
+   |        ----- required by a bound in this function
+...
+   |     H: Heuristic<Sp::State, Sp::Cost>,
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `astar`

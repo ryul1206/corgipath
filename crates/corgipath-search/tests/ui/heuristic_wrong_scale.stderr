@@ -1,0 +1,24 @@
+error[E0271]: expected `{closure@heuristic_wrong_scale.rs:10:23}` to return `FixedPoint<100>`, but it returns `FixedPoint<1>`
+  --> tests/ui/heuristic_wrong_scale.rs:10:40
+   |
+10 |     let wrong_scale = |_s: &GridState| FixedPoint::<1>(0);
+   |                       ---------------- ^^^^^^^^^^^^^^^^^^ expected `100`, found `1`
+   |                       |
+   |                       this closure
+11 |     let _ = astar(
+   |             ----- required by a bound introduced by this call
+...
+16 |         &wrong_scale,
+   |         ------------ closure used here
+   |
+   = note: expected struct `FixedPoint<100>`
+              found struct `FixedPoint<1>`
+   = note: required for `{closure@$DIR/tests/ui/heuristic_wrong_scale.rs:10:23: 10:39}` to implement `Heuristic<GridState, FixedPoint<100>>`
+note: required by a bound in `astar`
+  --> src/search.rs
+   |
+   | pub fn astar<Sp, Col, H, Obs, Bud>(
+   |        ----- required by a bound in this function
+...
+   |     H: Heuristic<Sp::State, Sp::Cost>,
+   |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ required by this bound in `astar`
